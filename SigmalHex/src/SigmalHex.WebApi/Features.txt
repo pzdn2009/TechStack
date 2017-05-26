@@ -1,4 +1,8 @@
 ﻿ThirdPaty Features:
 1. Swagger Integration. http://www.cnblogs.com/pengzhen/p/6909857.html
 
+WEB API Features:
+1. Enable Cross-Origin Requests (Cors). http://www.cnblogs.com/pengzhen/p/6910144.html 
+   official: https://docs.microsoft.com/en-us/aspnet/core/security/cors
+
 .net core Features:

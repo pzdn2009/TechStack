@@ -15,6 +15,7 @@ namespace SigmalHex.WebApi
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("Sigmal.json", optional: false, reloadOnChange: true)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
@@ -35,18 +36,28 @@ namespace SigmalHex.WebApi
                 c.SingleApiVersion(new Info
                 {
                     Version = "v1",     // 这个属性必须要填，否则会引发一个异常
-            Title = "Feature List",
+                    Title = "Feature List",
                     Description = "特征"
                 });
             });
 
             services.ConfigureSwaggerGen(c =>
             {
-        // 配置生成的 xml 注释文档路径
-        c.IncludeXmlComments(GetXmlCommentsPath());
+                // 配置生成的 xml 注释文档路径
+                c.IncludeXmlComments(GetXmlCommentsPath());
             });
 
             //******************* swagger end ***********************
+
+
+            //******************* cors start ***********************
+            var urls = Configuration[SigmalHexConstant.SigmalCoresUrls].Split(',');
+            services.AddCors(
+                options =>
+                options.AddPolicy(SigmalHexConstant.DefaultCorsPolicy,
+                builder => builder.WithOrigins(urls).AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials())
+            );
+            //******************* cors end ***********************
         }
 
         private string GetXmlCommentsPath()
@@ -67,6 +78,10 @@ namespace SigmalHex.WebApi
             app.UseSwagger();
             app.UseSwaggerUi("swagger/ui/index");
             //******************* swagger end ***********************
+
+            //******************* cors start ***********************
+            app.UseCors(SigmalHexConstant.DefaultCorsPolicy);
+            //******************* cors end ***********************
         }
     }
 }
