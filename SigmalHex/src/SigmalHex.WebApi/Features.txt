@@ -1,0 +1,4 @@
+﻿ThirdPaty Features:
+1. Swagger Integration. http://www.cnblogs.com/pengzhen/p/6909857.html
+
+.net core Features:

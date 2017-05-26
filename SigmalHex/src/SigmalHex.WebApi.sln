@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.WebApi", "SigmalHex.WebApi\SigmalHex.WebApi.csproj", "{01DE0310-35BD-47D2-A67A-4AFFBAD8747F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.EntityFramework", "SigmalHex.EntityFramework\SigmalHex.EntityFramework.csproj", "{0A5E49C4-2D31-4B2C-90D2-9F7814755C88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Datas", "Datas", "{A35565CA-450B-4ECE-A67E-FDE32A05E65F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex", "SigmalHex\SigmalHex.csproj", "{854B48C2-9BB2-47F5-99BF-86ECFC21FBA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.Domain", "SigmalHex.Domain\SigmalHex.Domain.csproj", "{3192FB1E-5AFA-460E-B061-B92AEB8A0C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.WebDashbord", "SigmalHex.WebDashbord\SigmalHex.WebDashbord.csproj", "{A8718949-7955-4B3B-BF67-7893E6E50301}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01DE0310-35BD-47D2-A67A-4AFFBAD8747F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DE0310-35BD-47D2-A67A-4AFFBAD8747F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DE0310-35BD-47D2-A67A-4AFFBAD8747F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DE0310-35BD-47D2-A67A-4AFFBAD8747F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5E49C4-2D31-4B2C-90D2-9F7814755C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5E49C4-2D31-4B2C-90D2-9F7814755C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5E49C4-2D31-4B2C-90D2-9F7814755C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5E49C4-2D31-4B2C-90D2-9F7814755C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854B48C2-9BB2-47F5-99BF-86ECFC21FBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854B48C2-9BB2-47F5-99BF-86ECFC21FBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854B48C2-9BB2-47F5-99BF-86ECFC21FBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854B48C2-9BB2-47F5-99BF-86ECFC21FBA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3192FB1E-5AFA-460E-B061-B92AEB8A0C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3192FB1E-5AFA-460E-B061-B92AEB8A0C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3192FB1E-5AFA-460E-B061-B92AEB8A0C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3192FB1E-5AFA-460E-B061-B92AEB8A0C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8718949-7955-4B3B-BF67-7893E6E50301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8718949-7955-4B3B-BF67-7893E6E50301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8718949-7955-4B3B-BF67-7893E6E50301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8718949-7955-4B3B-BF67-7893E6E50301}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A5E49C4-2D31-4B2C-90D2-9F7814755C88} = {A35565CA-450B-4ECE-A67E-FDE32A05E65F}
+		{854B48C2-9BB2-47F5-99BF-86ECFC21FBA1} = {A35565CA-450B-4ECE-A67E-FDE32A05E65F}
+		{3192FB1E-5AFA-460E-B061-B92AEB8A0C07} = {A35565CA-450B-4ECE-A67E-FDE32A05E65F}
+	EndGlobalSection
+EndGlobal
