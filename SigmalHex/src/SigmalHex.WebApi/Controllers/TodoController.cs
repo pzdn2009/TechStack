@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using SigmalHex.Domain.KBContext.ApplicationServices;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,13 @@ namespace SigmalHex.WebApi.Controllers
     {
         IFileProvider fileProvider;
         private log4net.ILog log = log4net.LogManager.GetLogger(Startup.repository.Name, typeof(TodoController));
+
+        public TodoController(IKnowledgeApplicationService knowledgeApplicationService)
+        {
+            KnowledgeApplicationService = knowledgeApplicationService;
+        }
+
+        public IKnowledgeApplicationService KnowledgeApplicationService { get; set; }
 
         // GET api/todo
         [HttpGet]
@@ -31,9 +39,9 @@ namespace SigmalHex.WebApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public object Get(int id)
         {
-            return "value";
+            return Ok(KnowledgeApplicationService.GetAll());
         }
 
         // POST api/values
