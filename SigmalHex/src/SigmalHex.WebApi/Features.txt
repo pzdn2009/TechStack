@@ -6,3 +6,10 @@ WEB API Features:
    official: https://docs.microsoft.com/en-us/aspnet/core/security/cors
 
 .net core Features:
+1. log4net Integration. http://www.cnblogs.com/pengzhen/p/6912491.html.
+   
+TODO:
+* AOP
+* GetSection
+* Logger.Debug,Console,File,ES. log4net,common.logging
+   Official:https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/logging

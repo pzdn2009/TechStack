@@ -10,11 +10,14 @@ namespace SigmalHex.WebApi.Controllers
     public class TodoController : Controller
     {
         IFileProvider fileProvider;
+        private log4net.ILog log = log4net.LogManager.GetLogger(Startup.repository.Name, typeof(TodoController));
 
         // GET api/todo
         [HttpGet]
         public async Task<string> GetAsync()
         {
+            log.Info("Get Async information.");
+
             fileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
             var fileInfo = fileProvider.GetFileInfo("Features.txt");
 
