@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using SigmalHex.Domain.FrameContext.ApplicationServices;
 using SigmalHex.Domain.KBContext.ApplicationServices;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +15,19 @@ namespace SigmalHex.WebApi.Controllers
         IFileProvider fileProvider;
         private log4net.ILog log = log4net.LogManager.GetLogger(Startup.repository.Name, typeof(TodoController));
 
-        public TodoController(IKnowledgeApplicationService knowledgeApplicationService)
+        public TodoController(IKnowledgeApplicationService knowledgeApplicationService, ITCPCollectorApplicationService tcpCollectorApplicationService, IServiceProvider serviceProvider)
         {
             KnowledgeApplicationService = knowledgeApplicationService;
+            TCPCollectorApplicationService = tcpCollectorApplicationService;
+
+            ServiceProvider = serviceProvider;
         }
 
         public IKnowledgeApplicationService KnowledgeApplicationService { get; set; }
+        public ITCPCollectorApplicationService TCPCollectorApplicationService { get; set; }
 
+
+        public IServiceProvider ServiceProvider { get; set; }
         // GET api/todo
         [HttpGet]
         public async Task<string> GetAsync()
@@ -41,7 +49,22 @@ namespace SigmalHex.WebApi.Controllers
         [HttpGet("{id}")]
         public object Get(int id)
         {
-            return Ok(KnowledgeApplicationService.GetAll());
+            if (id == 1)
+            {
+                return Ok(KnowledgeApplicationService.GetAll());
+            }
+            if (id == 2)
+            {
+                var tcpSvc = ServiceProvider.GetService(typeof(ITCPCollectorApplicationService)) as ITCPCollectorApplicationService;
+                return Ok(tcpSvc.GetAll());
+            }
+            else
+            {
+                return Ok(TCPCollectorApplicationService.GetAll());
+            }
+
+
+
         }
 
         // POST api/values

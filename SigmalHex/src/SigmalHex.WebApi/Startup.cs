@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using SigmalHex.Domain.FrameContext.ApplicationServices;
 using SigmalHex.Domain.KBContext.ApplicationServices;
 using Swashbuckle.Swagger.Model;
+using System;
 using System.IO;
 
 namespace SigmalHex.WebApi
@@ -30,8 +34,11 @@ namespace SigmalHex.WebApi
 
         public IConfigurationRoot Configuration { get; }
 
+        public IContainer ApplicationContainer { get; private set; }
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddMvc();
@@ -66,6 +73,17 @@ namespace SigmalHex.WebApi
             //******************* cors end ***********************
 
             services.AddScoped<IKnowledgeApplicationService, KnowledgeApplicationService>();
+
+            //******************* autofac start ***********************
+            // Create the container builder.
+            var autofacBuilder = new ContainerBuilder();
+
+            autofacBuilder.RegisterType<TCPCollectorApplicationService>().As<ITCPCollectorApplicationService>();
+            autofacBuilder.Populate(services);
+            this.ApplicationContainer = autofacBuilder.Build();
+
+            return new AutofacServiceProvider(this.ApplicationContainer);
+            //******************* autofac start ***********************
         }
 
         private string GetXmlCommentsPath()

@@ -8,6 +8,9 @@ WEB API Features:
 .net core Features:
 1. log4net Integration. http://www.cnblogs.com/pengzhen/p/6912491.html.
 2. Defautl DI. http://www.cnblogs.com/pengzhen/p/5756507.html
+3. Autofac DI. 
+   http://www.cnblogs.com/pengzhen/p/6912823.html
+   http://www.cnblogs.com/pengzhen/p/6912878.html
    
 TODO:
 * AOP
