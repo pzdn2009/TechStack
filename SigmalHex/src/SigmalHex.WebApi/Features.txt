@@ -11,9 +11,10 @@ WEB API Features:
 3. Autofac DI. 
    http://www.cnblogs.com/pengzhen/p/6912823.html
    http://www.cnblogs.com/pengzhen/p/6912878.html
+4. print all services.
+5. AOP Based the autofac.
    
 TODO:
-* AOP
 * GetSection
 * Logger.Debug,Console,File,ES. log4net,common.logging
    Official:https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/logging

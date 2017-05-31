@@ -1,11 +1,14 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using SigmalHex.AOP.Interceptors;
 using SigmalHex.Domain.FrameContext.ApplicationServices;
 using SigmalHex.Domain.KBContext.ApplicationServices;
 using Swashbuckle.Swagger.Model;
@@ -16,6 +19,8 @@ namespace SigmalHex.WebApi
 {
     public class Startup
     {
+        private IServiceCollection _services;
+
         public static log4net.Repository.ILoggerRepository repository { get; set; }
 
         public Startup(IHostingEnvironment env)
@@ -40,6 +45,8 @@ namespace SigmalHex.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            _services = services;
+
             // Add framework services.
             services.AddMvc();
 
@@ -78,7 +85,8 @@ namespace SigmalHex.WebApi
             // Create the container builder.
             var autofacBuilder = new ContainerBuilder();
 
-            autofacBuilder.RegisterType<TCPCollectorApplicationService>().As<ITCPCollectorApplicationService>();
+            autofacBuilder.Register(c => new NullInterceptor());
+            autofacBuilder.RegisterType<TCPCollectorApplicationService>().As<ITCPCollectorApplicationService>().EnableInterfaceInterceptors().InterceptedBy(typeof(NullInterceptor));
             autofacBuilder.Populate(services);
             this.ApplicationContainer = autofacBuilder.Build();
 
@@ -111,6 +119,27 @@ namespace SigmalHex.WebApi
             //******************* cors start ***********************
             app.UseCors(SigmalHexConstant.DefaultCorsPolicy);
             //******************* cors end ***********************
+
+            if (env.IsDevelopment())
+            {
+                //print all services
+                app.Map("/allservices", builder => builder.Run(async context =>
+                {
+                    context.Response.ContentType = "text/html; charset=utf-8";
+                    await context.Response.WriteAsync($"<h1>所有服务{_services.Count}个</h1><table><thead><tr><th>类型</th><th>生命周期</th><th>Instance</th></tr></thead><tbody>");
+                    foreach (var svc in _services)
+                    {
+                        await context.Response.WriteAsync("<tr>");
+                        await context.Response.WriteAsync($"<td>{svc.ServiceType.FullName}</td>");
+                        await context.Response.WriteAsync($"<td>{svc.Lifetime}</td>");
+                        await context.Response.WriteAsync($"<td>{svc.ImplementationType?.FullName}</td>");
+                        await context.Response.WriteAsync("</tr>");
+                    }
+                    await context.Response.WriteAsync("</tbody></table>");
+                }));
+                app.UseDeveloperExceptionPage();
+            }
+            
         }
     }
 }

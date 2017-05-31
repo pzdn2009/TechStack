@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.1.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
     <PackageReference Include="Common.Logging" Version="3.4.0-Beta2" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -27,6 +28,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SigmalHex.AOP\SigmalHex.AOP.csproj" />
     <ProjectReference Include="..\SigmalHex.Domain\SigmalHex.Domain.csproj" />
     <ProjectReference Include="..\SigmalHex.EntityFramework\SigmalHex.EntityFramework.csproj" />
     <ProjectReference Include="..\SigmalHex\SigmalHex.csproj" />
