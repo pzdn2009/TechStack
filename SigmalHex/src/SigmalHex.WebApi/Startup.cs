@@ -4,15 +4,20 @@ using Autofac.Extras.DynamicProxy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using SigmalHex.AOP.Interceptors;
 using SigmalHex.Domain.FrameContext.ApplicationServices;
 using SigmalHex.Domain.KBContext.ApplicationServices;
+using SigmalHex.WebApi.WebDashbord;
 using Swashbuckle.Swagger.Model;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace SigmalHex.WebApi
@@ -47,8 +52,41 @@ namespace SigmalHex.WebApi
         {
             _services = services;
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("zh-CN")
+                };
+
+                // State what the default culture for your application is. This will be used if no specific culture
+                // can be determined for a given request.
+                options.DefaultRequestCulture = new RequestCulture(culture: "zh-CN", uiCulture: "zh-CN");
+
+                // You must explicitly state which cultures your application supports.
+                // These are the cultures the app supports for formatting numbers, dates, etc.
+                options.SupportedCultures = supportedCultures;
+
+                // These are the cultures the app supports for UI strings, i.e. we have localized resources for.
+                options.SupportedUICultures = supportedCultures;
+
+                // You can change which providers are configured to determine the culture for requests, or even add a custom
+                // provider with your own logic. The providers will be asked in order to provide a culture for each request,
+                // and the first to provide a non-null result that is in the configured supported cultures list will be used.
+                // By default, the following built-in providers are configured:
+                // - QueryStringRequestCultureProvider, sets culture via "culture" and "ui-culture" query string values, useful for testing
+                // - CookieRequestCultureProvider, sets culture via "ASPNET_CULTURE" cookie
+                // - AcceptLanguageHeaderRequestCultureProvider, sets culture via the "Accept-Language" request header
+                options.RequestCultureProviders.Insert(0, new UrlRequestCultureProvider());
+            });
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
+            services.AddSingleton<IStringLocalizer, JsonStringLocalizer>();
+
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(/*opts => opts.Conventions.Insert(0, new ApiPrefixConvention())*/);
 
             //******************* swagger start ***********************
             services.AddSwaggerGen(c =>
@@ -109,16 +147,8 @@ namespace SigmalHex.WebApi
             var log = log4net.LogManager.GetLogger(repository.Name, typeof(Startup));
             log.Info("test log4net");
 
-            app.UseMvc();
-
-            //******************* swagger start ***********************
-            app.UseSwagger();
-            app.UseSwaggerUi("swagger/ui/index");
-            //******************* swagger end ***********************
-
-            //******************* cors start ***********************
-            app.UseCors(SigmalHexConstant.DefaultCorsPolicy);
-            //******************* cors end ***********************
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
 
             if (env.IsDevelopment())
             {
@@ -139,7 +169,21 @@ namespace SigmalHex.WebApi
                 }));
                 app.UseDeveloperExceptionPage();
             }
-            
+            else
+            {
+                app.UseExceptionHandler("/error");
+            }
+
+            app.UseMvc();
+
+            //******************* swagger start ***********************
+            app.UseSwagger();
+            app.UseSwaggerUi("swagger/ui/index");
+            //******************* swagger end ***********************
+
+            //******************* cors start ***********************
+            app.UseCors(SigmalHexConstant.DefaultCorsPolicy);
+            //******************* cors end ***********************
         }
     }
 }

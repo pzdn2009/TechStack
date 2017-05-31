@@ -13,6 +13,7 @@ WEB API Features:
    http://www.cnblogs.com/pengzhen/p/6912878.html
 4. print all services.
 5. AOP Based the autofac.
+6. Localization by json.
    
 TODO:
 * GetSection

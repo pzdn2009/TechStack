@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Localization;
 using SigmalHex.Domain.FrameContext.ApplicationServices;
 using SigmalHex.Domain.KBContext.ApplicationServices;
 using System;
@@ -9,17 +10,19 @@ using System.Threading.Tasks;
 
 namespace SigmalHex.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    public class TodoController : Controller
+    public class TodoController : BaseApiController
     {
+        private readonly IStringLocalizer<TodoController> _localizer;
+
         IFileProvider fileProvider;
         private log4net.ILog log = log4net.LogManager.GetLogger(Startup.repository.Name, typeof(TodoController));
 
-        public TodoController(IKnowledgeApplicationService knowledgeApplicationService, ITCPCollectorApplicationService tcpCollectorApplicationService, IServiceProvider serviceProvider)
+        public TodoController(IKnowledgeApplicationService knowledgeApplicationService, ITCPCollectorApplicationService tcpCollectorApplicationService, IStringLocalizer<TodoController> localizer, IServiceProvider serviceProvider)
         {
             KnowledgeApplicationService = knowledgeApplicationService;
             TCPCollectorApplicationService = tcpCollectorApplicationService;
 
+            _localizer = localizer;
             ServiceProvider = serviceProvider;
         }
 
@@ -32,7 +35,8 @@ namespace SigmalHex.WebApi.Controllers
         [HttpGet]
         public async Task<string> GetAsync()
         {
-            log.Info("Get Async information.");
+            log.Info(_localizer["Get Async information."]);
+            log.Info(_localizer["Hello"]);
 
             fileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
             var fileInfo = fileProvider.GetFileInfo("Features.txt");
@@ -62,9 +66,6 @@ namespace SigmalHex.WebApi.Controllers
             {
                 return Ok(TCPCollectorApplicationService.GetAll());
             }
-
-
-
         }
 
         // POST api/values
