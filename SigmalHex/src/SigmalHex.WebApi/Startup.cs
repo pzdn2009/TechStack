@@ -150,6 +150,8 @@ namespace SigmalHex.WebApi
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
 
+            app.UseStatusCodePages();
+
             if (env.IsDevelopment())
             {
                 //print all services
@@ -167,6 +169,7 @@ namespace SigmalHex.WebApi
                     }
                     await context.Response.WriteAsync("</tbody></table>");
                 }));
+
                 app.UseDeveloperExceptionPage();
             }
             else
