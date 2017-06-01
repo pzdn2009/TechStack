@@ -15,6 +15,7 @@ WEB API Features:
 5. AOP Based the autofac.
 6. Localization by json.
 7. Envs:Staging,Production in IISExpress.
+8. EF Integration.
    
 TODO:
 * GetSection

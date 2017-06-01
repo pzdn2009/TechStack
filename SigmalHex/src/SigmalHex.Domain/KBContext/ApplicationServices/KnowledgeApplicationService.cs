@@ -17,14 +17,14 @@ namespace SigmalHex.Domain.KBContext.ApplicationServices
                     Id = id,
                     Name=".NET CORE",
                     Description = "跨平台",
-                    Tags = new string[]{"DEV","LINUX"}
+                    Tags = "DEV,LINUX"
                 },
                 new Knowledge()
                 {
                     Id = id,
                     Name="C#",
                     Description = "跨平台",
-                    Tags = new string[]{"DEV","LINUX"}
+                    Tags = "DEV,LINUX"
                 }
             };
         }

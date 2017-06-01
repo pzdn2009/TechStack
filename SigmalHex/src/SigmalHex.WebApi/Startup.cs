@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using SigmalHex.AOP.Interceptors;
 using SigmalHex.Domain.FrameContext.ApplicationServices;
 using SigmalHex.Domain.KBContext.ApplicationServices;
+using SigmalHex.EntityFramework;
 using SigmalHex.WebApi.WebDashbord;
 using Swashbuckle.Swagger.Model;
 using System;
@@ -51,6 +53,8 @@ namespace SigmalHex.WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             _services = services;
+
+            services.AddDbContext<SigmalHexContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -139,7 +143,7 @@ namespace SigmalHex.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,SigmalHexContext dbContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -187,6 +191,8 @@ namespace SigmalHex.WebApi
             //******************* cors start ***********************
             app.UseCors(SigmalHexConstant.DefaultCorsPolicy);
             //******************* cors end ***********************
+
+            DbInitializer.Initialize(dbContext);
         }
     }
 }

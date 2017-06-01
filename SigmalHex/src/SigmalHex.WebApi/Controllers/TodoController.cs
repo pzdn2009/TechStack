@@ -33,7 +33,7 @@ namespace SigmalHex.WebApi.Controllers
         public IServiceProvider ServiceProvider { get; set; }
         // GET api/todo
         [HttpGet]
-        public async Task<string> GetAsync()
+        public async Task<IActionResult> GetAsync()
         {
             log.Info(_localizer["Get Async information."]);
             log.Info(_localizer["Hello"]);
@@ -46,12 +46,12 @@ namespace SigmalHex.WebApi.Controllers
             byte[] buffer = new byte[stream.Length];
             await stream.ReadAsync(buffer, 0, buffer.Length);
 
-            return Encoding.UTF8.GetString(buffer);
+            return Ok(Encoding.UTF8.GetString(buffer));
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public object Get(int id)
+        public IActionResult Get(int id)
         {
             if (id == 1)
             {

@@ -10,6 +10,6 @@ namespace SigmalHex.Domain.KBContext.Entities
 
         public string Description { get; set; }
 
-        public string[] Tags { get; set; }
+        public string Tags { get; set; }
     }
 }

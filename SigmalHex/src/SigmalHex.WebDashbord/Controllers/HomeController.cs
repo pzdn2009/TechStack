@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SigmalHex.WebDashbord.Controllers
 {
@@ -15,19 +12,32 @@ namespace SigmalHex.WebDashbord.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Your application description page.!!!";
 
             return View();
         }
 
-        public IActionResult Contact()
+        /// <summary>
+        /// Shows the error page
+        /// </summary>
+        public async Task<IActionResult> Error(string errorId)
         {
-            ViewData["Message"] = "Your contact page.";
+           
 
             return View();
         }
 
-        public IActionResult Error()
+        public IActionResult Math()
+        {
+            return View();
+        }
+
+        public IActionResult Requirement()
+        {
+            return View();
+        }
+
+        public IActionResult Tasks()
         {
             return View();
         }
