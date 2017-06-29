@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.WebDashbord", "Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.AOP", "SigmalHex.AOP\SigmalHex.AOP.csproj", "{2DD87F7B-BE83-4CE0-AD10-5E4CDD41CDA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.IdentityServer", "SigmalHex.IdentityServer\SigmalHex.IdentityServer.csproj", "{ED627D40-FEE2-479C-AE60-7CE9D2E35DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmalHex.IdentityServer.Client", "SigmalHex.IdentityServer.Client\SigmalHex.IdentityServer.Client.csproj", "{1A4974BC-50A5-4DE1-9402-2A8E957D577C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{2DD87F7B-BE83-4CE0-AD10-5E4CDD41CDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD87F7B-BE83-4CE0-AD10-5E4CDD41CDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD87F7B-BE83-4CE0-AD10-5E4CDD41CDA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED627D40-FEE2-479C-AE60-7CE9D2E35DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED627D40-FEE2-479C-AE60-7CE9D2E35DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED627D40-FEE2-479C-AE60-7CE9D2E35DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED627D40-FEE2-479C-AE60-7CE9D2E35DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A4974BC-50A5-4DE1-9402-2A8E957D577C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4974BC-50A5-4DE1-9402-2A8E957D577C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4974BC-50A5-4DE1-9402-2A8E957D577C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4974BC-50A5-4DE1-9402-2A8E957D577C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

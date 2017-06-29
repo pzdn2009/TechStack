@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using IdentityServer4.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace SigmalHex.IdentityServer
 {
@@ -29,6 +31,40 @@ namespace SigmalHex.IdentityServer
             }
 
             app.UseIdentityServer();
+        }
+    }
+
+    /// <summary>
+    /// api1,client1: use client credentials.
+    /// </summary>
+    public class Config
+    {
+        // scopes define the API resources in your system
+        public static IEnumerable<ApiResource> GetApiResources()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource("api1", "api for client credentials.")
+            };
+        }
+
+        // client want to access resources (aka scopes)
+        public static IEnumerable<Client> GetClients()
+        {
+            return new List<Client>
+            {
+                new Client
+                {
+                    ClientId = "client1",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                    ClientSecrets =
+                    {
+                        new Secret("Secretforclient".Sha256())
+                    },
+                    AllowedScopes = { "api1" }
+                }
+            };
         }
     }
 }

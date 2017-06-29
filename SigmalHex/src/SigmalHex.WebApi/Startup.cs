@@ -92,6 +92,8 @@ namespace SigmalHex.WebApi
             // Add framework services.
             services.AddMvc(/*opts => opts.Conventions.Insert(0, new ApiPrefixConvention())*/);
 
+            services.AddAuthorization();
+
             //******************* swagger start ***********************
             services.AddSwaggerGen(c =>
             {
@@ -147,6 +149,14 @@ namespace SigmalHex.WebApi
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                Authority = "http://localhost:5000",
+                RequireHttpsMetadata = false,
+
+                ApiName = "api1"
+            });
 
             var log = log4net.LogManager.GetLogger(repository.Name, typeof(Startup));
             log.Info("test log4net");
