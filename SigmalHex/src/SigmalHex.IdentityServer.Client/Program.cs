@@ -8,7 +8,11 @@ namespace SigmalHex.IdentityServer.Client
 {
     class Program
     {
-        public static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();
+        public static void Main(string[] args)
+        {
+            MainAsync().GetAwaiter().GetResult();
+            MainAsyncResourceOwner().GetAwaiter().GetResult();
+        }
 
         private static async Task MainAsync()
         {
@@ -18,6 +22,40 @@ namespace SigmalHex.IdentityServer.Client
             // request token
             var tokenClient = new TokenClient(disco.TokenEndpoint, "client1", "Secretforclient");
             var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
+
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return;
+            }
+
+            Console.WriteLine(tokenResponse.Json);
+            Console.WriteLine("\n\n");
+
+            // call api
+            var client = new HttpClient();
+            client.SetBearerToken(tokenResponse.AccessToken);
+
+            var response = await client.GetAsync("http://localhost:40675/identity");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(JArray.Parse(content));
+            }
+        }
+
+        private static async Task MainAsyncResourceOwner()
+        {
+            // discover endpoints from metadata
+            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
+
+            // request token
+            var tokenClient = new TokenClient(disco.TokenEndpoint, "client2", "pzdn2009");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("pzdn", "123456", "api1");
 
             if (tokenResponse.IsError)
             {
